@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  --background: #241b6a;
+  --foreground: #ffffff;
+  --dp-purple: #241b6a;
+  --dp-blue: #1f6fff;
+  --dp-orange: #f28c28;
+  --dp-pink: #ff5b8a;
+  --dp-slate: #0f172a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #241b6a;
+    --foreground: #ffffff;
+  }
+}
+
+body {
+  background: var(--dp-purple);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.splash-logo {
+  animation: splashIntro 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both,
+    splashWave 2.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.splash-logo-glow {
+  animation: splashPulse 2.2s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+@keyframes splashIntro {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes splashPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+    transform: scale(1.02);
+  }
+  50% {
+    filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.5));
+    transform: scale(1.08);
+  }
+}
+
+@keyframes splashWave {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1.02);
+  }
+  25% {
+    transform: translateY(-4px) rotate(-0.6deg) scale(1.04);
+  }
+  50% {
+    transform: translateY(3px) rotate(0.6deg) scale(1.06);
+  }
+  75% {
+    transform: translateY(-2px) rotate(-0.4deg) scale(1.04);
+  }
+}
