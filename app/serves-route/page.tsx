@@ -1,116 +1,139 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import MobileHeader from "../../components/MobileHeader";
 
-const REGIONS = [
-  {
-    label: "Europe",
-    image: "/europe.png",
-    className:
-      "rounded-2xl bg-[#1f6fff] px-3 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_12px_24px_rgba(31,111,255,0.25)]",
-  },
-  {
-    label: "Asia | Middle East | Africa",
-    image: "/asia.png",
-    className:
-      "rounded-2xl bg-[#f28c28] px-3 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_12px_24px_rgba(242,140,40,0.25)]",
-  },
-  {
-    label: "Mediterranean",
-    image: "/mediterranean.png",
-    className:
-      "rounded-2xl bg-[#19b36a] px-3 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_12px_24px_rgba(25,179,106,0.25)] flex items-center justify-center text-center leading-tight",
-  },
-  {
-    label: "Americas",
-    image: "/americas.png",
-    className:
-      "rounded-2xl bg-[#1f6fff] px-3 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_12px_24px_rgba(31,111,255,0.25)]",
-  },
+const COUNTRIES = [
+  "UAE",
+  "Saudi Arabia",
+  "Pakistan",
+  "India",
+  "Qatar",
+  "Oman",
+  "Bahrain",
 ];
 
-export default function ServesRoutePage() {
-  const [activeRegion, setActiveRegion] = useState<string | null>(null);
+const ROUTES = [
+  "Europe",
+  "Asia | Middle East | Africa",
+  "Mediterranean",
+  "Americas",
+];
 
-  const activeImage = REGIONS.find(
-    (region) => region.label === activeRegion
-  )?.image;
+const ROUTE_IMAGES: Record<string, string> = {
+  Europe: "/europe.png",
+  "Asia | Middle East | Africa": "/asia.png",
+  Mediterranean: "/mediterranean.png",
+  Americas: "/americas.png",
+};
+
+export default function ServesRoutePage() {
+  const [searchValue, setSearchValue] = useState("");
+  const [country1, setCountry1] = useState("");
+  const [country2, setCountry2] = useState("");
+  const [selectedRoute, setSelectedRoute] = useState("");
+
+  const routeImage = useMemo(() => {
+    if (!selectedRoute) {
+      return "";
+    }
+    return ROUTE_IMAGES[selectedRoute] || "";
+  }, [selectedRoute]);
 
   return (
     <section className="space-y-6 text-white">
       <MobileHeader title="Serves Route" />
 
-      <div className="rounded-[26px] bg-[#241B6A] p-5 text-white shadow-[0_18px_40px_rgba(8,6,34,0.25)]">
-        <div className="mb-4 flex justify-center">
-          <div className="w-full rounded-full bg-[#f28c28] px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white">
-            Serves Route
-          </div>
-        </div>
+      
 
         <div className="rounded-3xl bg-white/95 p-4 text-slate-900">
           <div className="space-y-3">
-            <div className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Search
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Port 1
-              </div>
-              <div className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Port 2
-              </div>
-            </div>
-          </div>
+            <label className="flex w-full flex-col gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Search
+              </span>
+              <input
+                type="text"
+                value={searchValue}
+                onChange={(event) => setSearchValue(event.target.value)}
+                placeholder="Search"
+                className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none"
+              />
+            </label>
 
-          <div className="mt-4 flex items-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#241B6A] text-white">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <label className="flex w-full flex-col gap-2">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                  Country 1
+                </span>
+                <select
+                  value={country1}
+                  onChange={(event) => setCountry1(event.target.value)}
+                  className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 focus:outline-none"
+                >
+                  <option value="">Select Country 1</option>
+                  {COUNTRIES.map((country) => (
+                    <option key={country} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex w-full flex-col gap-2">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                  Country 2
+                </span>
+                <select
+                  value={country2}
+                  onChange={(event) => setCountry2(event.target.value)}
+                  className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 focus:outline-none"
+                >
+                  <option value="">Select Country 2</option>
+                  {COUNTRIES.map((country) => (
+                    <option key={country} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <label className="flex w-full flex-col gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Check Routes
+              </span>
+              <select
+                value={selectedRoute}
+                onChange={(event) => setSelectedRoute(event.target.value)}
+                className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 focus:outline-none"
               >
-                <path
-                  d="M12 5V19M5 12H19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-            <p className="text-sm font-medium text-slate-700">Add Route</p>
+                <option value="">Select Route</option>
+                {ROUTES.map((route) => (
+                  <option key={route} value={route}>
+                    {route}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          {REGIONS.map((region) => (
-            <button
-              key={region.label}
-              type="button"
-              onClick={() => setActiveRegion(region.label)}
-              className={region.className}
-            >
-              {region.label}
-            </button>
-          ))}
-        </div>
-
-        {activeImage ? (
-          <div className="mt-4 flex justify-center">
+        {routeImage ? (
+          <div className="mt-4 overflow-hidden rounded-3xl bg-white/95 p-3">
             <Image
-              src={activeImage}
-              alt="Region map"
+              src={routeImage}
+              alt="Route map"
               width={900}
               height={640}
-              className="h-auto w-full max-w-full object-contain"
+              className="h-auto w-full max-w-full rounded-2xl object-contain"
               priority={false}
             />
           </div>
         ) : null}
-      </div>
+    
     </section>
   );
 }
+
+
