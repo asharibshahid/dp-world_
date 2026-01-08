@@ -1,12 +1,10 @@
-import CountrySelector from "./CountrySelector";
-
 type MobileHeaderProps = {
   title?: string;
 };
 
 export default function MobileHeader({ title }: MobileHeaderProps) {
   return (
-    <div className="grid grid-cols-[40px,1fr,minmax(120px,auto)] items-center gap-3">
+    <div className="grid grid-cols-[40px,1fr,40px] items-center gap-3">
       <button
         type="button"
         aria-label="Open menu"
@@ -30,9 +28,7 @@ export default function MobileHeader({ title }: MobileHeaderProps) {
       <span className="text-center text-base font-semibold leading-snug text-white">
         {title ?? "DP World"}
       </span>
-      <div className="flex items-center justify-end">
-        <CountrySelector />
-      </div>
+      <div className="h-10 w-10" aria-hidden="true" />
     </div>
   );
 }
