@@ -1,11 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import CountrySelector from "../components/CountrySelector";
 import MobileHeader from "../components/MobileHeader";
 
 export default function Home() {
   return (
     <section className="space-y-5 text-white">
-      <MobileHeader title="Dashboard" />
+      <div className="space-y-2">
+        <MobileHeader title="Dashboard" />
+        <div className="flex justify-end">
+          <CountrySelector />
+        </div>
+      </div>
 
       <div className="flex flex-col items-center gap-1">
         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
@@ -70,3 +76,4 @@ export default function Home() {
     </section>
   );
 }
+
